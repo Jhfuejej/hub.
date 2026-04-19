@@ -66,6 +66,7 @@ export function Workouts() {
           workout={active}
           onOpen={() => setOpenId(active.id)}
           onComplete={() => updateWorkout(active.id, { completedAt: Date.now() })}
+          onToggleSet={(exId, setId, done) => updateSet(active.id, exId, setId, { done })}
         />
       ) : (
         <Card style={{ padding: 28, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20 }}>
@@ -206,7 +207,7 @@ function StatCard({ label, value, unit, sub, accent }) {
   );
 }
 
-function ActiveSession({ workout, onOpen, onComplete }) {
+function ActiveSession({ workout, onOpen, onComplete, onToggleSet }) {
   const dur = durationFor(workout);
   const vol = volumeFor(workout);
   const setsDone = (workout.exercises || []).reduce((a, e) => a + (e.sets || []).filter((s) => s.done).length, 0);
@@ -226,6 +227,9 @@ function ActiveSession({ workout, onOpen, onComplete }) {
           <div style={{ marginTop: 14, display: 'flex', gap: 20, fontFamily: HUB.mono, fontSize: 12, color: HUB.ash }}>
             <span><span style={{ color: HUB.yellow }}>{setsDone}</span> / {totalSets} sets</span>
             <span><span style={{ color: HUB.yellow }}>{vol.toLocaleString()}</span> kg volume</span>
+          </div>
+          <div style={{ marginTop: 6, fontFamily: HUB.mono, fontSize: 10, color: HUB.fog }}>
+            Click any set to toggle it done.
           </div>
         </div>
         <div style={{ display: 'flex', gap: 10 }}>
@@ -249,19 +253,7 @@ function ActiveSession({ workout, onOpen, onComplete }) {
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
                 {ex.sets.slice(0, 8).map((s) => (
-                  <div key={s.id} style={{
-                    background: s.done ? HUB.yellow : HUB.graphite,
-                    color: s.done ? HUB.black : HUB.ash,
-                    padding: '10px 12px', borderRadius: 8, textAlign: 'center',
-                    fontFamily: HUB.font, fontWeight: 700,
-                  }}>
-                    <div style={{ fontSize: 15, fontVariantNumeric: 'tabular-nums' }}>
-                      {s.weight ? `${s.weight} kg` : '—'}
-                    </div>
-                    <div style={{ fontSize: 10, opacity: 0.7, marginTop: 2, letterSpacing: '0.08em' }}>
-                      × {s.reps || '—'}
-                    </div>
-                  </div>
+                  <SetTile key={s.id} set={s} onToggle={() => onToggleSet(ex.id, s.id, !s.done)} />
                 ))}
               </div>
             </div>
@@ -276,6 +268,35 @@ function ActiveSession({ workout, onOpen, onComplete }) {
         </div>
       )}
     </Card>
+  );
+}
+
+function SetTile({ set, onToggle }) {
+  const [hover, setHover] = useState(false);
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      title={set.done ? 'Mark incomplete' : 'Mark done'}
+      style={{
+        background: set.done ? HUB.yellow : HUB.graphite,
+        color: set.done ? HUB.black : HUB.ash,
+        padding: '10px 12px', borderRadius: 8, textAlign: 'center',
+        fontFamily: HUB.font, fontWeight: 700,
+        border: 0, cursor: 'pointer',
+        boxShadow: hover ? 'inset 0 0 0 1.5px rgba(245,208,51,0.55)' : 'inset 0 0 0 1px rgba(255,255,255,0.04)',
+        transition: 'box-shadow 120ms, background 120ms',
+      }}
+    >
+      <div style={{ fontSize: 15, fontVariantNumeric: 'tabular-nums' }}>
+        {set.weight ? `${set.weight} kg` : '—'}
+      </div>
+      <div style={{ fontSize: 10, opacity: 0.7, marginTop: 2, letterSpacing: '0.08em' }}>
+        × {set.reps || '—'}
+      </div>
+    </button>
   );
 }
 
