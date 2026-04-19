@@ -1,0 +1,155 @@
+/* =========================================================
+   HUB DESIGN SYSTEM — Core tokens
+   Black & yellow, slick and modern
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  --hub-black:        #0A0A0A;
+  --hub-ink:          #141414;
+  --hub-graphite:     #1F1F1F;
+  --hub-slate:        #2A2A2A;
+  --hub-steel:        #3D3D3D;
+  --hub-fog:          #6B6B6B;
+  --hub-ash:          #A3A3A3;
+  --hub-bone:         #E5E5E5;
+  --hub-paper:        #F5F5F4;
+  --hub-white:        #FFFFFF;
+
+  --hub-yellow:       #F5D033;
+  --hub-yellow-hi:    #FFE14A;
+  --hub-yellow-lo:    #C9A81C;
+  --hub-yellow-tint:  #FFF6CC;
+
+  --success:    #4ADE80;
+  --warning:    #FBBF24;
+  --danger:     #EF4444;
+  --info:       #60A5FA;
+
+  --bg-0: var(--hub-black);
+  --bg-1: var(--hub-ink);
+  --bg-2: var(--hub-graphite);
+  --bg-3: var(--hub-slate);
+  --border: var(--hub-steel);
+  --border-strong: #4A4A4A;
+
+  --fg-1: var(--hub-white);
+  --fg-2: var(--hub-bone);
+  --fg-3: var(--hub-ash);
+  --fg-4: var(--hub-fog);
+  --fg-accent: var(--hub-yellow);
+
+  --font-display: 'Montserrat', 'Gotham', ui-sans-serif, system-ui, sans-serif;
+  --font-body:    'Montserrat', 'Gotham', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --fs-display:  64px;
+  --fs-h1:       40px;
+  --fs-h2:       28px;
+  --fs-h3:       20px;
+  --fs-body:     15px;
+  --fs-sm:       13px;
+  --fs-xs:       11px;
+  --fs-overline: 11px;
+
+  --lh-tight: 1.05;
+  --lh-snug:  1.25;
+  --lh-body:  1.5;
+
+  --tracking-tight:  -0.03em;
+  --tracking-snug:   -0.01em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.08em;
+  --tracking-widest: 0.16em;
+
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 20px; --sp-6: 24px; --sp-8: 32px; --sp-10: 40px;
+  --sp-12: 48px; --sp-16: 64px; --sp-20: 80px;
+
+  --r-sm: 6px; --r-md: 10px; --r-lg: 14px; --r-xl: 20px; --r-2xl: 28px; --r-pill: 999px;
+
+  --shadow-sm:  0 1px 2px rgba(0,0,0,0.5);
+  --shadow-md:  0 6px 16px rgba(0,0,0,0.35);
+  --shadow-lg:  0 24px 48px -12px rgba(0,0,0,0.6);
+  --shadow-glow: 0 0 0 1px rgba(245,208,51,0.3), 0 8px 24px rgba(245,208,51,0.18);
+  --inner-hairline: inset 0 0 0 1px rgba(255,255,255,0.05);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 360ms;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-0);
+  color: var(--fg-1);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  min-height: 100vh;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+button, input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+input, textarea, select {
+  background: var(--bg-2);
+  border: 1px solid var(--bg-3);
+  color: var(--fg-1);
+  padding: 10px 14px;
+  border-radius: var(--r-md);
+  outline: none;
+  transition: border-color var(--dur-fast) var(--ease-out);
+  width: 100%;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: var(--hub-yellow);
+}
+input::placeholder, textarea::placeholder {
+  color: var(--fg-4);
+}
+
+button { cursor: pointer; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-0); }
+::-webkit-scrollbar-thumb { background: var(--bg-3); border-radius: 999px; border: 2px solid var(--bg-0); }
+::-webkit-scrollbar-thumb:hover { background: var(--border-strong); }
+
+.hub-overline {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-overline);
+  line-height: 1;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+.hub-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes hub-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes hub-scale-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
